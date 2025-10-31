@@ -27,6 +27,7 @@ const [formData,setFormData] = useState({
       // Firebase Firestore에 데이터 저장
       await addDoc(collection(db, "contacts"), {
         name: formData.name,
+        phone: formData.phone,
         email: formData.email,
         message: formData.message,
         timestamp: serverTimestamp(),
@@ -35,7 +36,7 @@ const [formData,setFormData] = useState({
       // 성공 메시지
       setSubmitStatus("success");
       alert("Thank you for your message! Your message has been saved.");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", phone:"", email: "", message: "" });
     } catch (error) {
       // 에러 처리
       console.error("Error saving contact:", error);
