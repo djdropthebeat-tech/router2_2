@@ -6,6 +6,7 @@ export default function Contact() {
 
 const [formData,setFormData] = useState({
   name:'',
+  phone:'',
   email:'',
   message:'',
 });
@@ -23,7 +24,7 @@ const handleChange = (e) =>{
 const handleSubmit = (e) => {
   e.preventDefault();
   alert('메세지가 전송되었습니다.!(데모)')
-  setFormData({name:'', email:'', message:''})
+  setFormData({name:'',phone:'', email:'', message:''})
 
 };
 
@@ -62,6 +63,18 @@ const handleSubmit = (e) => {
             />
           </div>
           
+          <div className="form-group">
+            <label htmlFor="phone">연락처</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">이메일</label>
             <input
