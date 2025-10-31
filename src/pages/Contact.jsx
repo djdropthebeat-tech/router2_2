@@ -36,7 +36,7 @@ const [formData,setFormData] = useState({
       // 성공 메시지
       setSubmitStatus("success");
       alert("Thank you for your message! Your message has been saved.");
-      setFormData({ name: "", phone:"", email: "", message: "" });
+      setFormData({ name: "", phone: "", email: "", message: "" });
     } catch (error) {
       // 에러 처리
       console.error("Error saving contact:", error);
