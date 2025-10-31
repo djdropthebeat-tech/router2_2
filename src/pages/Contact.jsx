@@ -1,6 +1,9 @@
 import React from 'react'
 import './Contact.css'
 import { useState } from 'react'
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+
 
 export default function Contact() {
 
@@ -10,6 +13,39 @@ const [formData,setFormData] = useState({
   email:'',
   message:'',
 });
+
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Firebase Firestore에 데이터 저장
+      await addDoc(collection(db, "contacts"), {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        timestamp: serverTimestamp(),
+      });
+
+      // 성공 메시지
+      setSubmitStatus("success");
+      alert("Thank you for your message! Your message has been saved.");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      // 에러 처리
+      console.error("Error saving contact:", error);
+      setSubmitStatus("error");
+      alert("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
 const handleChange = (e) =>{
   setFormData({
@@ -21,12 +57,6 @@ const handleChange = (e) =>{
   });
 }
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  alert('메세지가 전송되었습니다.!(데모)')
-  setFormData({name:'',phone:'', email:'', message:''})
-
-};
 
   return (
     <div className='contact'>
